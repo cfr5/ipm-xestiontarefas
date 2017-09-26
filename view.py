@@ -14,10 +14,11 @@ class View():
 		button.connect('clicked', controller.on_button_salir_clicked)
 		box.pack_end(button, True, True, 0)
 
+		GLib.idle_add(self.showWelcome,win)
 
 
-	def showWelcome(self):
-		welcome = Gtk.Dialog("El mítico gestor de tareas", window, 0,
+	def showWelcome(self,win):
+		welcome = Gtk.Dialog("El mítico gestor de tareas", win, 0,
                      (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                           Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		vbox = Gtk.VBox(spacing = 10)
