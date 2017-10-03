@@ -7,7 +7,12 @@ class Controller():
 		#self.model = Model(self)
 		
 		self.view = View(self)
-		self.doWelcome()
+		cont = self.view.showWelcome()
+		if cont:
+			print("continuar")
+		else:
+			print("salir")
+			#Gtk.main_quit()
 
 
 	def on_close (self,):
@@ -18,9 +23,4 @@ class Controller():
 		Gtk.main_quit()
 
 		
-	def doWelcome(self):
-		respuesta = self.view.showWelcome()
-		if respuesta == Gtk.ResponseType.OK:
-			self.view.win.show_all()
-		elif respuesta == Gtk.ResponseType.CANCEL:
-			Gtk.main_quit()
+	

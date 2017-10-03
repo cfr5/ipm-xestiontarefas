@@ -14,7 +14,8 @@ class View():
 		box.pack_end(button, True, True, 0)
 		
 
-
+	def doWelcome(self):
+		pass
 	def showWelcome(self):
 		welcome = Gtk.Dialog("El mítico gestor de tareas",None, 0,
                      (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -29,11 +30,18 @@ class View():
 		vbox.pack_start(etiqueta2, True, True, 0)
 		welcome.show_all()
 		respuesta = welcome.run()
-		return respuesta
+		if respuesta == Gtk.ResponseType.OK:
+			return True
+		elif respuesta == Gtk.ResponseType.CANCEL:
+			return False
+
+
 		
 
 	def showSalir(self):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
 		dialog.run()
-		dialog.destroy()
+		dialog.destroy()	
+
+
