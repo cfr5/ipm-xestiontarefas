@@ -5,22 +5,14 @@ class Controller():
 
 	def  __init__(self):
 		#self.model = Model(self)
-		
+
 		self.view = View(self)
-		cont = self.view.showWelcome()
-		if cont:
-			print("continuar")
-		else:
-			print("salir")
-			Gtk.main_quit()
+		self.view.showWelcome()
 
 
-	def on_close (self,):
+
+	def on_close (self):
 		Gtk.main_quit()
 
-	def on_button_salir_clicked(self):
-		self.view.showSalir()
-		Gtk.main_quit()
-
-		
-	
+	def on_button_salir_clicked(self, widget):
+		self.view.showSalir(widget)

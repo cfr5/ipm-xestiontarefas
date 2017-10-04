@@ -5,19 +5,18 @@ from gi.repository import Gtk, GLib, GObject
 class View():
 
 	def __init__(self, controller):
-		win = Gtk.Window(title="Práctica 1 -- IPM 17/18")
+		self._win = Gtk.Window(title="Práctica 1 -- IPM 17/18")
 		box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
-		win.add(box)
+		self._win.add(box)
 
 		button = Gtk.Button(label="Salir")
 		button.connect('clicked', controller.on_button_salir_clicked)
 		box.pack_end(button, True, True, 0)
-		
 
-	def doWelcome(self):
-		pass
+
+
 	def showWelcome(self):
-		welcome = Gtk.Dialog("El mítico gestor de tareas",None, 0,
+		welcome = Gtk.Dialog("El mítico gestor de tareas",self._win, 0,
                      (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                           Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		vbox = Gtk.VBox(spacing = 10)
@@ -31,17 +30,16 @@ class View():
 		welcome.show_all()
 		respuesta = welcome.run()
 		if respuesta == Gtk.ResponseType.OK:
-			self.view.win.show_all()
+			welcome.destroy()
+			self._win.show_all()
 		elif respuesta == Gtk.ResponseType.CANCEL:
-			Gtk.main_quit()
+			welcome.destroy()
+			#Gtk.main_quit()
 
 
-		
-
-	def showSalir(self):
+	def showSalir(widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
 		dialog.run()
-		dialog.destroy()	
-
-
+		dialog.destroy()
+		Gtk.main_quit()

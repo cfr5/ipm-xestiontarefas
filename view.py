@@ -37,7 +37,7 @@ class View():
 			#Gtk.main_quit()
 
 
-	def showSalir(widget):
+	def showSalir(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
 		dialog.run()

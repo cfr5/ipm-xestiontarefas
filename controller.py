@@ -11,8 +11,8 @@ class Controller():
 
 
 
-	def on_close (self,):
+	def on_close (self):
 		Gtk.main_quit()
 
-	def on_button_salir_clicked(widget):
+	def on_button_salir_clicked(self, widget):
 		self.view.showSalir(widget)
