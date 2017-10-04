@@ -1,13 +1,30 @@
-
+from datetime import datetime, date
 
 class Model():
 
+	def __init__ (self, controller):
+		self.list = []
 
+		self.list.append(["Llevar coche al taller", date.today(), False])
+		self.list.append(["Lavar el coche", date(2017, 8, 1), False])
+		self.list.append(["Pagar el seguro", date(2017,1,1), False])
+		self.list.append(["Arreglar mando garaje", date.today(), False])
 
-	def compare_fecha(model, treeiter1, treeiter2, user_data):
-		if model[treeiter1][1] < model[treeiter2][1]:
-			return -1
-    	if model[treeiter1][1] > model[treeiter2][1]:
-        	return 1
-    	return 0
+	def insertar_lista(self, element):
+		if element != None:
+			self.list.append(element)
+
+	def editar_valor_lista(self, nombre, data):
+		if nombre != None:
+			for sublist in self.list:
+				if sublist[1] == nombre:
+					sublist[1] = data[1]
+					sublist[2] = data[2]
+					sublist[3] = data[3]
+
+	def eliminar_valor_lista(self, nombre):
+		if nombre != None:
+			for sublist in self.list:
+				if sublist[1] == nombre:
+					self.list.remove(sublist)
 

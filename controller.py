@@ -1,15 +1,18 @@
 from view import *
-#from model import *
+from model import *
 
 class Controller():
 
 	def  __init__(self):
-		#self.model = Model(self)
-
+		self.model = Model(self)
 		self.view = View(self)
+		self.initialice_list(self.model.list, self.view.store)
 		self.view.showWelcome()
 
-
+	def initialice_list(self, lista, store):
+		if lista != None:
+			for sublist in lista:
+				self.view.store.append(sublist)
 
 	def on_close (self):
 		Gtk.main_quit()
@@ -20,8 +23,8 @@ class Controller():
 
 	def on_button_añadir_clicked(self, widget, tree):
 		data = self.view.run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
-		if data != None:
-			self.view.tree.get_model().append(data)
+		self.model.insertar_lista(data)
+		self.view.añadir_tarea_view(data)
 
 
 	def on_button_editar_clicked(self, widget, tree):
@@ -29,10 +32,9 @@ class Controller():
 		model, treeiter = selection.get_selected()
 		if treeiter != None:
 			data = self.view.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model[treeiter])
-			if data != None:
-				model.set(treeiter, 0, data[0])
-				model.set(treeiter, 1, data[1])
-				model.set(treeiter, 2, data[2])
+			self.view.editar_tarea_view(model, treeiter, data)
+			self.model.editar_valor_lista(self.view.store[treeiter][0], data)
+
 
 
 	def on_button_eliminar_clicked(self, widget, tree):
@@ -40,6 +42,7 @@ class Controller():
 	    model, treeiter = selection.get_selected()
 	    if treeiter != None:
 	        model.remove(treeiter)
+			#self.model.eliminar_valor_lista(self.view.store[treeiter][0])
 
 	def fecha_cell_data_func(self, column, renderer, model, treeiter, data):
 	    fecha = model[treeiter][1]

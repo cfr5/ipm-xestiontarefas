@@ -16,21 +16,10 @@ class View():
 		button.connect('clicked', controller.on_button_salir_clicked)
 		box.pack_end(button, True, True, 0)
 
-		store = Gtk.ListStore(str, GObject.TYPE_PYOBJECT, bool)
-		store.append(["Llevar coche al taller", date.today(), False])
-		store.append(["Lavar el coche", date(2017, 8, 1), False])
-		store.append(["Pagar el seguro", date(2017,1,1), False])
-		store.append(["Arreglar mando garaje", date.today(), False])
-		store.append(["Recoger ropa del tinte", date.today(), False])
-		store.append(["Regalo cumpleaños Nico", date(2018,1,1), False])
-		store.append(["Devolver libro a la biblioteca", date(2018,2,12), True])
-		store.append(["Ordenar el congelador", date(2017,9,12), False])
-		store.append(["Lavar las cortinas", date(2017,10,1), False])
-		store.append(["Organizar el cajón de los mandos", date(2017,10,5), False])
-		store.append(["Poner flores en las jardineras", date.today(), False])
+		self.store = Gtk.ListStore(str, GObject.TYPE_PYOBJECT, bool)
 
 		#Tree view
-		self.tree = Gtk.TreeView(store)
+		self.tree = Gtk.TreeView(self.store)
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Tarea", renderer, text=0)
 		self.tree.append_column(column)
@@ -40,7 +29,7 @@ class View():
 		column.set_cell_data_func(renderer, controller.fecha_cell_data_func)
 		self.tree.append_column(column)
 		column.set_sort_column_id(1)
-		store.set_sort_func(1, controller.compare_fecha, None)
+		self.store.set_sort_func(1, controller.compare_fecha, None)
 		renderer = Gtk.CellRendererToggle()
 		column = Gtk.TreeViewColumn("Hecho", renderer, active=2)
 		self.tree.append_column(column)
@@ -88,7 +77,18 @@ class View():
 			self._win.show_all()
 		elif respuesta == Gtk.ResponseType.CANCEL:
 			welcome.destroy()
-			GLib.idle_add(Gtk.main_quit)
+			GLib.idle_add(Gtk.main_quit)		
+
+
+	def añadir_tarea_view(self, data):
+		if data != None:
+			self.tree.get_model().append(data)
+
+	def editar_tarea_view(self, model, treeiter, data):
+		if data != None:
+			model.set(treeiter, 0, data[0])
+			model.set(treeiter, 1, data[1])
+			model.set(treeiter, 2, data[2])
 
 	def run_dialog_añadir_editar(self,title, parent, data=None):
 	    dialog = Gtk.Dialog(title, parent, Gtk.DialogFlags.DESTROY_WITH_PARENT, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
