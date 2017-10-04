@@ -88,7 +88,7 @@ class View():
 			self._win.show_all()
 		elif respuesta == Gtk.ResponseType.CANCEL:
 			welcome.destroy()
-			#Gtk.main_quit()
+			GLib.idle_add(Gtk.main_quit)
 
 	def run_dialog_añadir_editar(self,title, parent, data=None):
 	    dialog = Gtk.Dialog(title, parent, Gtk.DialogFlags.DESTROY_WITH_PARENT, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
