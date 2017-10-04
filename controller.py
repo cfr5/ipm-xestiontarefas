@@ -19,16 +19,16 @@ class Controller():
 
 
 	def on_button_añadir_clicked(self, widget, tree):
-		data = run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
+		data = self.view.run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
 		if data != None:
-			self.tree.get_model().append(data)
+			self.view.tree.get_model().append(data)
 
 
 	def on_button_editar_clicked(self, widget, tree):
-		selection = self.tree.get_selection()
+		selection = self.view.tree.get_selection()
 		model, treeiter = selection.get_selected()
 		if treeiter != None:
-			data = run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model[treeiter])
+			data = self.view.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model[treeiter])
 			if data != None:
 				model.set(treeiter, 0, data[0])
 				model.set(treeiter, 1, data[1])
@@ -36,7 +36,7 @@ class Controller():
 
 
 	def on_button_eliminar_clicked(self, widget, tree):
-	    selection = self.tree.get_selection()
+	    selection = self.view.tree.get_selection()
 	    model, treeiter = selection.get_selected()
 	    if treeiter != None:
 	        model.remove(treeiter)
