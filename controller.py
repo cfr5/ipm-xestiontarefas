@@ -47,11 +47,3 @@ class Controller():
     def fecha_cell_data_func(self, column, renderer, model, treeiter, data):
         fecha = model[treeiter][1]
         renderer.set_property('text', fecha.strftime("%x"))
-
-
-    def compare_fecha(self, model, treeiter1, treeiter2, user_data):
-        if model[treeiter1][1] < model[treeiter2][1]:
-            return -1
-        if model[treeiter1][1] > model[treeiter2][1]:
-            return 1
-        return 0

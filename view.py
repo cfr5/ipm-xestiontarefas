@@ -29,7 +29,7 @@ class View():
 		column.set_cell_data_func(renderer, controller.fecha_cell_data_func)
 		self.tree.append_column(column)
 		column.set_sort_column_id(1)
-		self.store.set_sort_func(1, controller.compare_fecha, None)
+		self.store.set_sort_func(1, self.compare_fecha, None)
 		renderer = Gtk.CellRendererToggle()
 		column = Gtk.TreeViewColumn("Hecho", renderer, active=2)
 		self.tree.append_column(column)
@@ -77,7 +77,7 @@ class View():
 			self._win.show_all()
 		elif respuesta == Gtk.ResponseType.CANCEL:
 			welcome.destroy()
-			GLib.idle_add(Gtk.main_quit)		
+			GLib.idle_add(Gtk.main_quit)
 
 
 	def añadir_tarea_view(self, data):
@@ -124,3 +124,10 @@ class View():
 		dialog.run()
 		dialog.destroy()
 		Gtk.main_quit()
+
+	def compare_fecha(self, model, treeiter1, treeiter2, user_data):
+        	if model[treeiter1][1] < model[treeiter2][1]:
+            		return -1
+        	if model[treeiter1][1] > model[treeiter2][1]:
+            		return 1
+        	return 0
