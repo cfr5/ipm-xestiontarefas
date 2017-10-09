@@ -42,17 +42,17 @@ class View():
 
 		#Boton anadir
 		button = Gtk.Button(label="Añadir")
-		button.connect('clicked', controller.on_button_añadir_clicked, self.tree)
+		button.connect('clicked', controller.on_button_añadir_clicked)
 		box2.pack_end(button, True, True, 0)
 
 		#Boton eliminar
 		button = Gtk.Button(label="Eliminar")
-		button.connect('clicked', controller.on_button_eliminar_clicked, self.tree)
+		button.connect('clicked', controller.on_button_eliminar_clicked)
 		box2.pack_end(button, True, True, 0)
 
 		#Boton editar
 		button = Gtk.Button(label="Editar")
-		button.connect('clicked', controller.on_button_editar_clicked, self.tree)
+		button.connect('clicked', controller.on_button_editar_clicked)
 		box2.pack_end(button, True, True, 0)
 
 

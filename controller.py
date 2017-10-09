@@ -19,13 +19,13 @@ class Controller():
         self.view.showSalir(widget)
 
 
-    def on_button_añadir_clicked(self, widget, tree):
+    def on_button_añadir_clicked(self, widget):
         data = self.view.run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
         self.model.insertar_lista(data)
         self.view.añadir_tarea_view(data)
 
 
-    def on_button_editar_clicked(self, widget, tree):
+    def on_button_editar_clicked(self, widget):
         model1, treeiter = self.view.obtener_seleccion()
         if treeiter != None:
             data = self.view.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model1[treeiter])
@@ -33,7 +33,7 @@ class Controller():
             self.model.editar_valor_lista(self.view.store[treeiter][0], data)
 
 
-    def on_button_eliminar_clicked(self, widget, tree):
+    def on_button_eliminar_clicked(self, widget):
         model1, treeiter = self.view.obtener_seleccion()
         if treeiter != None:
             self.model.eliminar_valor_lista(self.view.store[treeiter][0])
