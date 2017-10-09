@@ -26,7 +26,7 @@ class View():
 		column.set_sort_column_id(0)
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Fecha", renderer)
-		column.set_cell_data_func(renderer, controller.fecha_cell_data_func)
+		column.set_cell_data_func(renderer, self.fecha_cell_data_func)
 		self.tree.append_column(column)
 		column.set_sort_column_id(1)
 		self.store.set_sort_func(1, self.compare_fecha, None)
@@ -79,6 +79,14 @@ class View():
 			welcome.destroy()
 			GLib.idle_add(Gtk.main_quit)
 
+	def fecha_cell_data_func(self, column, renderer, model, treeiter, data):
+		fecha = model[treeiter][1]
+		renderer.set_property('text', fecha.strftime("%x"))
+
+	def obtener_seleccion(self):
+		selection = self.tree.get_selection()
+		model, treeiter = selection.get_selected()
+		return model, treeiter
 
 	def añadir_tarea_view(self, data):
 		if data != None:
@@ -89,6 +97,9 @@ class View():
 			model.set(treeiter, 0, data[0])
 			model.set(treeiter, 1, data[1])
 			model.set(treeiter, 2, data[2])
+
+	def eliminar_tarea_view(self, model, treeiter):
+		model.remove(treeiter)
 
 	def run_dialog_añadir_editar(self,title, parent, data=None):
 	    dialog = Gtk.Dialog(title, parent, Gtk.DialogFlags.DESTROY_WITH_PARENT, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
@@ -118,6 +129,7 @@ class View():
 	    dialog.destroy()
 	    return data
 
+
 	def showSalir(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
@@ -131,3 +143,8 @@ class View():
         	if model[treeiter1][1] > model[treeiter2][1]:
             		return 1
         	return 0
+
+
+
+
+

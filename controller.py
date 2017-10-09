@@ -14,8 +14,6 @@ class Controller():
             for sublist in lista:
                 self.view.store.append(sublist)
 
-    def on_close (self):
-        Gtk.main_quit()
 
     def on_button_salir_clicked(self, widget):
         self.view.showSalir(widget)
@@ -28,22 +26,19 @@ class Controller():
 
 
     def on_button_editar_clicked(self, widget, tree):
-        selection = self.view.tree.get_selection()
-        model, treeiter = selection.get_selected()
+        model1, treeiter = self.view.obtener_seleccion()
         if treeiter != None:
-            data = self.view.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model[treeiter])
-            self.view.editar_tarea_view(model, treeiter, data)
+            data = self.view.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model1[treeiter])
+            self.view.editar_tarea_view(model1, treeiter, data)
             self.model.editar_valor_lista(self.view.store[treeiter][0], data)
 
 
-
     def on_button_eliminar_clicked(self, widget, tree):
-        selection = self.view.tree.get_selection()
-        model, treeiter = selection.get_selected()
+        model1, treeiter = self.view.obtener_seleccion()
         if treeiter != None:
-            model.remove(treeiter)
             self.model.eliminar_valor_lista(self.view.store[treeiter][0])
+            self.view.eliminar_tarea_view(model1, treeiter)
+            
 
-    def fecha_cell_data_func(self, column, renderer, model, treeiter, data):
-        fecha = model[treeiter][1]
-        renderer.set_property('text', fecha.strftime("%x"))
+
+

@@ -17,14 +17,15 @@ class Model():
 	def editar_valor_lista(self, nombre, data):
 		if nombre != None:
 			for sublist in self.list:
-				if sublist[1] == nombre:
+				if sublist[0] == nombre:
+					sublist[0] = data[0]
 					sublist[1] = data[1]
-					sublist[2] = data[2]
-					sublist[3] = data[3]
+					sublist[1] = data[2]
 
 	def eliminar_valor_lista(self, nombre):
+		print(nombre)
 		if nombre != None:
 			for sublist in self.list:
-				if sublist[1] == nombre:
+				if sublist[0] == nombre:
 					self.list.remove(sublist)
 
