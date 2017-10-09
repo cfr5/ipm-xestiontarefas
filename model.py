@@ -12,7 +12,9 @@ class Model():
 
 	def insertar_lista(self, element):
 		if element != None:
-			self.list.append(element)
+			if (type(element[1]) is datetime):
+				self.list.append(element)
+
 
 	def editar_valor_lista(self, nombre, data):
 		if nombre != None:
