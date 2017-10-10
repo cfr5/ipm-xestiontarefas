@@ -26,7 +26,8 @@ class Controller():
 
     def on_button_editar_clicked(self, widget):
         dataold, datanew = self.view.editar_tarea_view(widget)
-        self.model.editar_valor_lista(dataold, datanew)
+        if dataold != None and datanew != None:
+            self.model.editar_valor_lista(dataold, datanew)
 
     def on_button_eliminar_clicked(self, widget):
         data = self.view.eliminar_tarea_view()

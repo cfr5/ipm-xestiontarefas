@@ -96,14 +96,16 @@ class View():
 
 	def editar_tarea_view(self, widget):
 		model, treeiter = self.obtener_seleccion()
-		dataold = self.store[treeiter][0]
+		data = None
+		dataold = None
 		if treeiter != None:
 			data = self.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model[treeiter])
-		if data != None:
-			model.set(treeiter, 0, data[0])
-			model.set(treeiter, 1, data[1])
-			model.set(treeiter, 2, data[2])	
-			return dataold, data
+			dataold = self.store[treeiter][0]			
+			if data != None and dataold != None:
+				model.set(treeiter, 0, data[0])
+				model.set(treeiter, 1, data[1])
+				model.set(treeiter, 2, data[2])	
+		return dataold, data
 
 	def eliminar_tarea_view(self):
 		model, treeiter = self.obtener_seleccion()
