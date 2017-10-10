@@ -88,18 +88,28 @@ class View():
 		model, treeiter = selection.get_selected()
 		return model, treeiter
 
-	def añadir_tarea_view(self, data):
+	def añadir_tarea_view(self, widget):
+		data = self.run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
 		if data != None:
 			self.tree.get_model().append(data)
+			return data
 
-	def editar_tarea_view(self, model, treeiter, data):
+	def editar_tarea_view(self, widget):
+		model, treeiter = self.obtener_seleccion()
+		dataold = self.store[treeiter][0]
+		if treeiter != None:
+			data = self.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model[treeiter])
 		if data != None:
 			model.set(treeiter, 0, data[0])
 			model.set(treeiter, 1, data[1])
-			model.set(treeiter, 2, data[2])
+			model.set(treeiter, 2, data[2])	
+			return dataold, data
 
-	def eliminar_tarea_view(self, model, treeiter):
+	def eliminar_tarea_view(self):
+		model, treeiter = self.obtener_seleccion()
+		data = self.store[treeiter][0]
 		model.remove(treeiter)
+		return data
 
 	def run_dialog_añadir_editar(self,title, parent, data=None):
 	    dialog = Gtk.Dialog(title, parent, Gtk.DialogFlags.DESTROY_WITH_PARENT, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
@@ -144,7 +154,8 @@ class View():
             		return 1
         	return 0
 
-
+	def get_store(self):
+		return self.store
 
 
 

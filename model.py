@@ -10,19 +10,19 @@ class Model():
 		self.list.append(["Pagar el seguro", date(2017,1,1), False])
 		self.list.append(["Arreglar mando garaje", date.today(), False])
 
-	def insertar_lista(self, element):
-		if element != None:
-			if (type(element[1]) is datetime):
-				self.list.append(element)
+	def insertar_lista(self, data):
+		if data != None:
+			if (type(data[1]) is datetime):
+				self.list.append(data)
 
 
 	def editar_valor_lista(self, nombre, data):
 		if nombre != None:
-			for sublist in self.list:
-				if sublist[0] == nombre:
-					sublist[0] = data[0]
-					sublist[1] = data[1]
-					sublist[1] = data[2]
+				for sublist in self.list:
+					if sublist[0] == nombre:
+						sublist[0] = data[0]
+						sublist[1] = data[1]
+						sublist[1] = data[2]
 
 	def eliminar_valor_lista(self, nombre):
 		if nombre != None:
@@ -30,3 +30,5 @@ class Model():
 				if sublist[0] == nombre:
 					self.list.remove(sublist)
 
+	def get_list(self):
+		return self.list
