@@ -1,6 +1,7 @@
 import gi
+import locale
 gi.require_version('Gtk', '3.0')
-from datetime import datetime, date
+from datetime import datetime, date, time
 from gi.repository import Gtk, GLib, GObject
 
 
@@ -66,8 +67,8 @@ class View():
 	def dialog_exception_date(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
 				(Gtk.STOCK_OK, Gtk.ResponseType.OK), " Formato de fecha incorrecta")
-		formatoFecha = datetime.isoformat(datetime.now(datetime.timezone().gtm))
-		dialog.format_secondary_text("El formato debe ser" + formatoFecha)
+		formatoFecha = locale.nl_langinfo(locale.D_FMT)
+		dialog.format_secondary_text("El formato debe ser :" + datetime.now().strftime(formatoFecha))
 		dialog.run()
 		dialog.destroy()
 
