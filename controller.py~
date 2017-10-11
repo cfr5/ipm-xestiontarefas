@@ -6,8 +6,7 @@ class Controller():
     def  __init__(self):
         self.model = Model(self)
         self.view = View(self)
-        self.initialice_list(self.model.list, self.view.store)
-        self.view.showWelcome()
+        self.initialice_list(self.model.get_list(), self.view.get_store())
 
     def initialice_list(self, lista, store):
         if lista != None:
@@ -19,26 +18,19 @@ class Controller():
         self.view.showSalir(widget)
 
 
-    def on_button_añadir_clicked(self, widget, tree):
-        data = self.view.run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
+    def on_button_añadir_clicked(self, widget):
+        data = self.view.añadir_tarea_view(widget)
         self.model.insertar_lista(data)
-        self.view.añadir_tarea_view(data)
 
 
-    def on_button_editar_clicked(self, widget, tree):
-        model1, treeiter = self.view.obtener_seleccion()
-        if treeiter != None:
-            data = self.view.run_dialog_añadir_editar("Editar tarea", widget.get_toplevel(), model1[treeiter])
-            self.view.editar_tarea_view(model1, treeiter, data)
-            self.model.editar_valor_lista(self.view.store[treeiter][0], data)
+    def on_button_editar_clicked(self, widget):
+        dataold, datanew = self.view.editar_tarea_view(widget)
+        if dataold != None and datanew != None:
+            self.model.editar_valor_lista(dataold, datanew)
 
-
-    def on_button_eliminar_clicked(self, widget, tree):
-        model1, treeiter = self.view.obtener_seleccion()
-        if treeiter != None:
-            self.model.eliminar_valor_lista(self.view.store[treeiter][0])
-            self.view.eliminar_tarea_view(model, treeiter)
-            
+    def on_button_eliminar_clicked(self, widget):
+        data = self.view.eliminar_tarea_view()
+        self.model.eliminar_valor_lista(data)     
 
 
 

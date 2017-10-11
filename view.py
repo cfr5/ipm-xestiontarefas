@@ -56,32 +56,20 @@ class View():
 		box2.pack_end(button, True, True, 0)
 
 
-
-
 	def showWelcome(self):
-		welcome = Gtk.Dialog("El mítico gestor de tareas",self._win, 0,
-                     (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                          Gtk.STOCK_OK, Gtk.ResponseType.OK))
-		vbox = Gtk.VBox(spacing = 10)
-		welcome.get_content_area().add(vbox)
-
-		etiqueta1 = Gtk.Label("Bienvenido !!!!!111!!!")
-
-		etiqueta2 = Gtk.Label("(╯◕_◕)╯ (╯◕_◕)╯ ╰(◣﹏◢)╯ ╰(◕_◕╰) ╰(◕_◕╰)")
-		vbox.pack_start(etiqueta1, True, True, 0)
-		vbox.pack_start(etiqueta2, True, True, 0)
-		welcome.show_all()
-		respuesta = welcome.run()
-		if respuesta == Gtk.ResponseType.OK:
-			welcome.destroy()
-			self._win.show_all()
-		elif respuesta == Gtk.ResponseType.CANCEL:
-			welcome.destroy()
-			GLib.idle_add(Gtk.main_quit)
+		self._win.show_all()
 
 	def fecha_cell_data_func(self, column, renderer, model, treeiter, data):
 		fecha = model[treeiter][1]
 		renderer.set_property('text', fecha.strftime("%x"))
+
+	def dialog_exception_date(self, widget):
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
+				(Gtk.STOCK_OK, Gtk.ResponseType.OK), " Formato de fecha incorrecta")
+		formatoFecha = datetime.isoformat(datetime.now(datetime.timezone().gtm))
+		dialog.format_secondary_text("El formato debe ser" + formatoFecha)
+		dialog.run()
+		dialog.destroy()
 
 	def obtener_seleccion(self):
 		selection = self.tree.get_selection()
@@ -137,17 +125,22 @@ class View():
 	        try:
 	            data = [tareaEntry.get_text(), datetime.strptime(fechaEntry.get_text(), "%x"), hechoCheckButton.get_active()]
 	        except ValueError:
-	            pass
+	            self.dialog_exception_date(parent.get_toplevel())
 	    dialog.destroy()
 	    return data
 
 
 	def showSalir(self, widget):
-		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "¿ Quieres detener esta acción ?")
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                          Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
-		dialog.run()
-		dialog.destroy()
-		Gtk.main_quit()
+		respuesta = dialog.run()
+		if respuesta == Gtk.ResponseType.OK:
+			dialog.destroy()
+			Gtk.main_quit()
+		elif respuesta == Gtk.ResponseType.CANCEL:
+			dialog.destroy()
+	
 
 	def compare_fecha(self, model, treeiter1, treeiter2, user_data):
         	if model[treeiter1][1] < model[treeiter2][1]:
