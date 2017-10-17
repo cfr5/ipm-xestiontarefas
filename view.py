@@ -2,7 +2,7 @@ import gi
 import locale
 gi.require_version('Gtk', '3.0')
 from datetime import datetime, date, time
-from gi.repository import Gtk, GLib, GObject
+from gi.repository import Gtk, Gdk, GLib, GObject
 
 
 class View():
@@ -55,7 +55,23 @@ class View():
 		button = Gtk.Button(label="Editar")
 		button.connect('clicked', controller.on_button_editar_clicked)
 		box2.pack_end(button, True, True, 0)
+		
+		self._win.connect("key-press-event",self._key_press_event,controller)
 
+	def _key_press_event(self,widget,event,controller):
+		state = event.state
+		keyval = event.keyval
+		keyval_name = Gdk.keyval_name(keyval)
+		ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
+		if ctrl and keyval_name=='d':
+			controller.on_button_eliminar_clicked(widget)
+		elif ctrl and keyval_name=='e':
+			controller.on_button_editar_clicked(widget)
+		elif ctrl and keyval_name=='a':
+			controller.on_button_añadir_clicked(widget)
+		else:
+			return False
+		return True
 
 	def showWelcome(self):
 		self._win.show_all()
