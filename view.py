@@ -63,12 +63,14 @@ class View():
 		keyval = event.keyval
 		keyval_name = Gdk.keyval_name(keyval)
 		ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
-		if ctrl and keyval_name=='d':
+		if ctrl and keyval_name == 'd':
 			controller.on_button_eliminar_clicked(widget)
-		elif ctrl and keyval_name=='e':
+		elif ctrl and keyval_name == 'e':
 			controller.on_button_editar_clicked(widget)
-		elif ctrl and keyval_name=='a':
+		elif ctrl and keyval_name == 'a':
 			controller.on_button_añadir_clicked(widget)
+		elif keyval_name == 'Escape':
+			controller.on_button_salir_clicked(widget)
 		else:
 			return False
 		return True
