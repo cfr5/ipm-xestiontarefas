@@ -55,6 +55,9 @@ class View():
 		button = Gtk.Button(label="Editar")
 		button.connect('clicked', controller.on_button_editar_clicked)
 		box2.pack_end(button, True, True, 0)
+
+		######
+		self._win.connect('delete-event', self.on_close)
 		
 		self._win.connect("key-press-event",self._key_press_event,controller)
 
@@ -172,6 +175,18 @@ class View():
 			Gtk.main_quit()
 		elif respuesta == Gtk.ResponseType.CANCEL:
 			dialog.destroy()
+
+	def on_close(self, widget, *data):
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                          Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿ Quieres detener esta acción ?")
+		dialog.format_secondary_text("Si no la detienes, el programa terminará")
+		respuesta = dialog.run()
+		if respuesta == Gtk.ResponseType.OK:
+			dialog.destroy()
+			Gtk.main_quit()
+		elif respuesta == Gtk.ResponseType.CANCEL:
+			dialog.destroy()
+			return True
 	
 
 	def compare_fecha(self, model, treeiter1, treeiter2, user_data):

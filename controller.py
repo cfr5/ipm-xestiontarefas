@@ -14,7 +14,6 @@ class Controller():
             for sublist in lista:
                 self.view.store.append(sublist)
 
-
     def on_button_salir_clicked(self, widget):
         self.view.showSalir(widget)
 
