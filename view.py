@@ -16,9 +16,9 @@ class View():
 
 
 		#Boton Salir
-		#button = Gtk.Button(label="Salir")
-		#button.connect('clicked', controller.on_button_salir_clicked)
-		#box.pack_end(button, True, True, 0)
+		button = Gtk.Button(label="Salir")
+		button.connect('clicked', controller.on_button_salir_clicked)
+		box.pack_end(button, True, True, 0)
 		
 
 		self.store = Gtk.ListStore(str, GObject.TYPE_PYOBJECT, bool)
@@ -54,40 +54,40 @@ class View():
 		helpm.set_submenu(helpmenu)
 
 		####
-		#box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-		#box.pack_start(box2, True, True, 0)
+		box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+		box.pack_start(box2, True, True, 0)
 
 		#Boton anadir
-		#button = Gtk.Button(label="Añadir")
-		#button.connect('clicked', controller.on_button_añadir_clicked)
-		#box2.pack_end(button, True, True, 0)
+		button = Gtk.Button(label="Añadir")
+		button.connect('clicked', controller.on_button_añadir_clicked)
+		box2.pack_end(button, True, True, 0)
 
 		anadir = Gtk.MenuItem("Añadir tarea")
 		anadir.connect("activate", controller.on_button_añadir_clicked)
 		filemenu.append(anadir)
 
 		#Boton editar
-		#button = Gtk.Button(label="Editar")
-		#button.connect('clicked', controller.on_button_editar_clicked)
-		#box2.pack_end(button, True, True, 0)
+		button = Gtk.Button(label="Editar")
+		button.connect('clicked', controller.on_button_editar_clicked)
+		box2.pack_end(button, True, True, 0)
 
 		editar = Gtk.MenuItem("Editar tarea")
 		editar.connect("activate", controller.on_button_editar_clicked)
 		editmenu.append(editar)
 
 		#Boton eliminar
-		#button = Gtk.Button(label="Eliminar")
-		#button.connect('clicked', controller.on_button_eliminar_clicked)
-		#box2.pack_end(button, True, True, 0)
+		button = Gtk.Button(label="Eliminar")
+		button.connect('clicked', controller.on_button_eliminar_clicked)
+		box2.pack_end(button, True, True, 0)
 
 		eliminar = Gtk.MenuItem("Eliminar tarea")
 		eliminar.connect("activate", controller.on_button_eliminar_clicked)
 		editmenu.append(eliminar)
 
 		#Boton ayuda
-		#button = Gtk.Button(label="Ayuda")
-		#button.connect('clicked', controller.on_button_ayuda_clicked)
-		#box2.pack_end(button, True, True, 0)
+		button = Gtk.Button(label="Ayuda")
+		button.connect('clicked', controller.on_button_ayuda_clicked)
+		box2.pack_end(button, True, True, 0)
 
 		ayuda = Gtk.MenuItem("Ayuda  F1")
 		ayuda.connect("activate", controller.on_button_ayuda_clicked)
