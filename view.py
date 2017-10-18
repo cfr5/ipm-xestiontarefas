@@ -56,6 +56,11 @@ class View():
 		button.connect('clicked', controller.on_button_editar_clicked)
 		box2.pack_end(button, True, True, 0)
 
+		#Boton ayuda
+		button = Gtk.Button(label="Ayuda")
+		button.connect('clicked', controller.on_button_ayuda_clicked)
+		box2.pack_end(button, True, True, 0)
+
 		######
 		self._win.connect('delete-event', self.on_close)
 		
@@ -65,10 +70,11 @@ class View():
 		state = event.state
 		keyval = event.keyval
 		keyval_name = Gdk.keyval_name(keyval)
+		print ( keyval_name)
 		ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
-		if ctrl and keyval_name == 'd':
+		if ((ctrl and keyval_name == 'd') | (keyval_name == 'Delete')):
 			controller.on_button_eliminar_clicked(widget)
-		elif ctrl and keyval_name == 'e':
+		elif ((ctrl and keyval_name == 'e') | (keyval_name == 'Return')):
 			controller.on_button_editar_clicked(widget)
 		elif ctrl and keyval_name == 'a':
 			controller.on_button_añadir_clicked(widget)
@@ -174,6 +180,13 @@ class View():
 			dialog.destroy()
 			Gtk.main_quit()
 		elif respuesta == Gtk.ResponseType.CANCEL:
+			dialog.destroy()
+	
+	def showHelp(self, widget):
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿Necesitas Ayuda?")
+		dialog.format_secondary_text("Añadir: Ctrl+A\n"+"Delete: Ctrl+D or Supr\n"+"Editar: Ctrl+E or Enter"+"Salir: Esc\n")
+		respuesta = dialog.run()
+		if respuesta == Gtk.ResponseType.OK:
 			dialog.destroy()
 
 	def on_close(self, widget, *data):

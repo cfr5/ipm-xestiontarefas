@@ -32,5 +32,6 @@ class Controller():
         data = self.view.eliminar_tarea_view(widget)
         self.model.eliminar_valor_lista(data)     
 
-
+    def on_button_ayuda_clicked(self, widget):
+        self.view.showHelp(widget)  
 
