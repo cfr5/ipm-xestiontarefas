@@ -84,7 +84,13 @@ class View():
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
 				(Gtk.STOCK_OK, Gtk.ResponseType.OK), " Formato de fecha incorrecta")
 		formatoFecha = locale.nl_langinfo(locale.D_FMT)
-		dialog.format_secondary_text("El formato debe ser :" + datetime.now().strftime(formatoFecha))
+		dialog.format_secondary_text("El formato debe ser : Ej " + datetime.now().strftime(formatoFecha))
+		dialog.run()
+		dialog.destroy()
+
+	def dialog_exception_selection(self, widget):
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
+				(Gtk.STOCK_OK, Gtk.ResponseType.OK), "Para realizar la acción, seleccione una tarea")
 		dialog.run()
 		dialog.destroy()
 
@@ -92,6 +98,7 @@ class View():
 		selection = self.tree.get_selection()
 		model, treeiter = selection.get_selected()
 		return model, treeiter
+
 
 	def añadir_tarea_view(self, widget):
 		data = self.run_dialog_añadir_editar("Añadir tarea", widget.get_toplevel())
@@ -110,12 +117,18 @@ class View():
 				model.set(treeiter, 0, data[0])
 				model.set(treeiter, 1, data[1])
 				model.set(treeiter, 2, data[2])	
+		else:
+			self.dialog_exception_selection(widget)
 		return dataold, data
 
-	def eliminar_tarea_view(self):
+	def eliminar_tarea_view(self, widget):
 		model, treeiter = self.obtener_seleccion()
-		data = self.store[treeiter][0]
-		model.remove(treeiter)
+		data = None
+		if treeiter != None:
+			data = self.store[treeiter][0]
+			model.remove(treeiter)
+		else:
+			self.dialog_exception_selection(widget)
 		return data
 
 	def run_dialog_añadir_editar(self,title, parent, data=None):

@@ -7,6 +7,7 @@ class Controller():
         self.model = Model(self)
         self.view = View(self)
         self.initialice_list(self.model.get_list(), self.view.get_store())
+        self.view.showWelcome()
 
     def initialice_list(self, lista, store):
         if lista != None:
