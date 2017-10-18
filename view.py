@@ -89,9 +89,13 @@ class View():
 		#button.connect('clicked', controller.on_button_ayuda_clicked)
 		#box2.pack_end(button, True, True, 0)
 
-		ayuda = Gtk.MenuItem("Atajos de teclado")
+		ayuda = Gtk.MenuItem("Ayuda  F1")
 		ayuda.connect("activate", controller.on_button_ayuda_clicked)
 		helpmenu.append(ayuda)
+
+		about = Gtk.MenuItem("Acerca de")
+		about.connect("activate", controller.on_button_acerca_de_clicked)
+		helpmenu.append(about)
 
 		######
 
@@ -122,7 +126,7 @@ class View():
 			controller.on_button_añadir_clicked(widget)
 		elif keyval_name == 'Escape':
 			controller.on_button_salir_clicked(widget)
-		elif ctrl and keyval_name == 'F1':
+		elif keyval_name == 'F1':
 			controller.on_button_ayuda_clicked(widget)
 		else:
 			return False
@@ -229,6 +233,13 @@ class View():
 	def showHelp(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿Necesitas Ayuda?")
 		dialog.format_secondary_text("Añadir:  Ctrl+A\n"+"Delete:  Ctrl+D or Supr\n"+"Editar:   Ctrl+E or Enter\n"+"Salir:       Esc\n")
+		respuesta = dialog.run()
+		if respuesta == Gtk.ResponseType.OK:
+			dialog.destroy()
+
+	def showAbout(self, widget):
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_OK, Gtk.ResponseType.OK), "Acerca de IPM")
+		dialog.format_secondary_text("Creadores:  Santiago Álvarez Fernandez y Carlos Franco Romero\n"+"Copyright © 2017 - IPM group\n")
 		respuesta = dialog.run()
 		if respuesta == Gtk.ResponseType.OK:
 			dialog.destroy()

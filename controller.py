@@ -33,5 +33,9 @@ class Controller():
         self.model.eliminar_valor_lista(data)     
 
     def on_button_ayuda_clicked(self, widget):
-        self.view.showHelp(widget)  
+        self.view.showHelp(widget)
+    
+    def on_button_acerca_de_clicked(self, widget):
+        self.view.showAbout(widget)  
+
 
