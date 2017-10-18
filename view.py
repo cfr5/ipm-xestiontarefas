@@ -57,9 +57,9 @@ class View():
 		box2.pack_end(button, True, True, 0)
 
 		#Boton ayuda
-		button = Gtk.Button(label="Ayuda")
-		button.connect('clicked', controller.on_button_ayuda_clicked)
-		box2.pack_end(button, True, True, 0)
+		#button = Gtk.Button(label="Ayuda")
+		#button.connect('clicked', controller.on_button_ayuda_clicked)
+		#box2.pack_end(button, True, True, 0)
 
 		######
 		self._win.connect('delete-event', self.on_close)
@@ -70,7 +70,6 @@ class View():
 		state = event.state
 		keyval = event.keyval
 		keyval_name = Gdk.keyval_name(keyval)
-		print ( keyval_name)
 		ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
 		if ((ctrl and keyval_name == 'd') | (keyval_name == 'Delete')):
 			controller.on_button_eliminar_clicked(widget)
@@ -80,6 +79,8 @@ class View():
 			controller.on_button_añadir_clicked(widget)
 		elif keyval_name == 'Escape':
 			controller.on_button_salir_clicked(widget)
+		elif ctrl and keyval_name == 'F1':
+			controller.on_button_ayuda_clicked(widget)
 		else:
 			return False
 		return True
