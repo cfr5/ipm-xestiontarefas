@@ -120,15 +120,15 @@ class View():
 		keyval = event.keyval
 		keyval_name = Gdk.keyval_name(keyval)
 		ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
-		if ((ctrl and keyval_name == 'd') | (keyval_name == 'Delete')):
+		if (ctrl and keyval_name == 'Delete'):
 			controller.on_button_eliminar_clicked(widget)
 		elif ((ctrl and keyval_name == 'e') | (keyval_name == 'Return')):
 			controller.on_button_editar_clicked(widget)
-		elif ctrl and keyval_name == 'a':
+		elif (ctrl and keyval_name == 'n'):
 			controller.on_button_añadir_clicked(widget)
-		elif keyval_name == 'Escape':
+		elif (ctrl and keyval_name == 'q'):
 			controller.on_button_salir_clicked(widget)
-		elif keyval_name == 'F1':
+		elif (keyval_name == 'F1'):
 			controller.on_button_ayuda_clicked(widget)
 		else:
 			return False
@@ -234,7 +234,7 @@ class View():
 	
 	def showHelp(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿Necesitas Ayuda?")
-		dialog.format_secondary_text("Añadir:  Ctrl+A\n"+"Delete:  Ctrl+D or Supr\n"+"Editar:   Ctrl+E or Enter\n"+"Salir:       Esc\n")
+		dialog.format_secondary_text("Añadir:  Ctrl+N\n"+"Delete:  Ctrl+Supr\n"+"Editar:   Ctrl+E or Enter\n"+"Salir:       Ctrl+Q\n")
 		respuesta = dialog.run()
 		if respuesta == Gtk.ResponseType.OK:
 			dialog.destroy()
