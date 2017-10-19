@@ -49,7 +49,6 @@ class Controller():
         self.view.start_spinner()
         self.model.server_sync(lista)
         self.view.stop_spinner()
-        return True
 
 
 

@@ -47,6 +47,5 @@ class Model():
 		lista2 = lista
 		random = randint(2,12)
 		time.sleep(random)
-		return True
 
 
