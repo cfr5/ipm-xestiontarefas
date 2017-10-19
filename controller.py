@@ -1,5 +1,7 @@
 from view import *
 from model import *
+import threading
+import time
 
 class Controller():
 
@@ -21,21 +23,27 @@ class Controller():
     def on_button_añadir_clicked(self, widget):
         data = self.view.añadir_tarea_view(widget)
         self.model.insertar_lista(data)
+        result = threading.Thread(target=self.server_sync, args=[self.model.get_list()], daemon=True).start()
 
 
     def on_button_editar_clicked(self, widget):
         dataold, datanew = self.view.editar_tarea_view(widget)
         if dataold != None and datanew != None:
             self.model.editar_valor_lista(dataold, datanew)
+            result = threading.Thread(target=self.server_sync, args=[self.model.get_list()], daemon=True).start()
 
     def on_button_eliminar_clicked(self, widget):
         data = self.view.eliminar_tarea_view(widget)
-        self.model.eliminar_valor_lista(data)     
+        self.model.eliminar_valor_lista(data)   
+        result = threading.Thread(target=self.server_sync, args=[self.model.get_list()], daemon=True).start()  
 
     def on_button_ayuda_clicked(self, widget):
         self.view.showHelp(widget)
     
     def on_button_acerca_de_clicked(self, widget):
-        self.view.showAbout(widget)  
-
+        self.view.showAbout(widget) 
+ 
+    def server_sync(self, lista):
+        time.sleep(2)
+        return True
 

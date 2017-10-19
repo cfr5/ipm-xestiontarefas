@@ -135,7 +135,7 @@ class View():
 		renderer.set_property('text', fecha.strftime("%x"))
 
 	def dialog_exception_date(self, widget):
-		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.ERROR, 
 				(Gtk.STOCK_OK, Gtk.ResponseType.OK), " Formato de fecha incorrecta")
 		formatoFecha = locale.nl_langinfo(locale.D_FMT)
 		dialog.format_secondary_text("El formato debe ser : Ej " + datetime.now().strftime(formatoFecha))
@@ -225,7 +225,7 @@ class View():
 
 
 	def showSalir(self, widget):
-		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.WARNING, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                           Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
 		respuesta = dialog.run()
@@ -250,7 +250,7 @@ class View():
 			dialog.destroy()
 
 	def on_close(self, widget, *data):
-		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.WARNING, (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                           Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿ Quieres detener esta acción ?")
 		dialog.format_secondary_text("Si no la detienes, el programa terminará")
 		respuesta = dialog.run()

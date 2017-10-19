@@ -21,6 +21,7 @@ class Model():
 		if data != None:
 			if (type(data[1]) is datetime):
 				self.list.append(data)
+				
 
 
 	def editar_valor_lista(self, nombre, data):
@@ -39,3 +40,5 @@ class Model():
 
 	def get_list(self):
 		return self.list
+
+
