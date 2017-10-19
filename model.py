@@ -45,7 +45,7 @@ class Model():
 
 	def server_sync(self, lista):
 		lista2 = lista
-		random = randint(0,10)
+		random = randint(2,12)
 		time.sleep(random)
 		return True
 

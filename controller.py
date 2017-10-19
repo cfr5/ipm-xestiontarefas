@@ -23,7 +23,7 @@ class Controller():
     def on_button_añadir_clicked(self, widget):
         data = self.view.añadir_tarea_view(widget)
         self.model.insertar_lista(data)
-        result = threading.Thread(target=self.server_sync, args=[self.model.get_list()], daemon=True).start()
+        result = threading.Thread(target=self.model.server_sync, args=[self.model.get_list()], daemon=True).start()
 
 
     def on_button_editar_clicked(self, widget):
