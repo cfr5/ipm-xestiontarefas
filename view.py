@@ -12,14 +12,7 @@ class View():
 		box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
 		self._win.add(box)
 
-		menu = Gtk.MenuBar()
-
-
-		#Boton Salir
-		#button = Gtk.Button(label="Salir")
-		#button.connect('clicked', controller.on_button_salir_clicked)
-		#box.pack_end(button, True, True, 0)
-		
+		menu = Gtk.MenuBar()		
 
 		self.store = Gtk.ListStore(str, GObject.TYPE_PYOBJECT, bool)
 
@@ -155,6 +148,15 @@ class View():
 		dialog.run()
 		dialog.destroy()
 
+	def alert_edit_add(self, widget, title):
+		if title == "Añadir tarea":
+			tmp = "añadido"
+		else: tmp = "actualizado"
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
+				(Gtk.STOCK_OK, Gtk.ResponseType.OK), "La tarea se ha "+ tmp + " correctamente")
+		dialog.run()
+		dialog.destroy()
+
 	def obtener_seleccion(self):
 		selection = self.tree.get_selection()
 		model, treeiter = selection.get_selected()
@@ -215,6 +217,7 @@ class View():
 	    if response == Gtk.ResponseType.OK:
 	        try:
 	            data = [tareaEntry.get_text(), datetime.strptime(fechaEntry.get_text(), "%x"), hechoCheckButton.get_active()]
+	            self.alert_edit_add(parent.get_toplevel(), title)
 	        except ValueError:
 	            self.dialog_exception_date(parent.get_toplevel())
 	    dialog.destroy()

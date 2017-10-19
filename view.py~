@@ -12,14 +12,7 @@ class View():
 		box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
 		self._win.add(box)
 
-		menu = Gtk.MenuBar()
-
-
-		#Boton Salir
-		#button = Gtk.Button(label="Salir")
-		#button.connect('clicked', controller.on_button_salir_clicked)
-		#box.pack_end(button, True, True, 0)
-		
+		menu = Gtk.MenuBar()		
 
 		self.store = Gtk.ListStore(str, GObject.TYPE_PYOBJECT, bool)
 
@@ -54,44 +47,50 @@ class View():
 		helpm.set_submenu(helpmenu)
 
 		####
-		#box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-		#box.pack_start(box2, True, True, 0)
+		box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+		box.pack_start(box2, True, True, 0)
 
-		#Boton anadir
-		#button = Gtk.Button(label="Añadir")
-		#button.connect('clicked', controller.on_button_añadir_clicked)
-		#box2.pack_end(button, True, True, 0)
-
-		anadir = Gtk.MenuItem("Añadir tarea")
-		anadir.connect("activate", controller.on_button_añadir_clicked)
-		filemenu.append(anadir)
-
-		#Boton editar
-		#button = Gtk.Button(label="Editar")
-		#button.connect('clicked', controller.on_button_editar_clicked)
-		#box2.pack_end(button, True, True, 0)
-
-		editar = Gtk.MenuItem("Editar tarea")
-		editar.connect("activate", controller.on_button_editar_clicked)
-		editmenu.append(editar)
-
+		#Boton ayuda
+		button = Gtk.Button(label="Ayuda")
+		button.connect('clicked', controller.on_button_ayuda_clicked)
+		box2.pack_end(button, True, True, 0)
+		
+		ayuda = Gtk.MenuItem("Ayuda  F1")
+		ayuda.connect("activate", controller.on_button_ayuda_clicked)
+		helpmenu.append(ayuda)	
+	
 		#Boton eliminar
-		#button = Gtk.Button(label="Eliminar")
-		#button.connect('clicked', controller.on_button_eliminar_clicked)
-		#box2.pack_end(button, True, True, 0)
+		button = Gtk.Button(label="Eliminar")
+		button.connect('clicked', controller.on_button_eliminar_clicked)
+		box2.pack_end(button, True, True, 0)
 
 		eliminar = Gtk.MenuItem("Eliminar tarea")
 		eliminar.connect("activate", controller.on_button_eliminar_clicked)
 		editmenu.append(eliminar)
 
-		#Boton ayuda
-		#button = Gtk.Button(label="Ayuda")
-		#button.connect('clicked', controller.on_button_ayuda_clicked)
-		#box2.pack_end(button, True, True, 0)
+		#Boton editar
+		button = Gtk.Button(label="Editar")
+		button.connect('clicked', controller.on_button_editar_clicked)
+		box2.pack_end(button, True, True, 0)
 
-		ayuda = Gtk.MenuItem("About")
-		ayuda.connect("activate", controller.on_button_ayuda_clicked)
-		helpmenu.append(ayuda)
+		editar = Gtk.MenuItem("Editar tarea")
+		editar.connect("activate", controller.on_button_editar_clicked)
+		editmenu.append(editar)
+
+		#Boton anadir
+		button = Gtk.Button(label="Añadir")
+		button.connect('clicked', controller.on_button_añadir_clicked)
+		box2.pack_end(button, True, True, 0)
+
+		anadir = Gtk.MenuItem("Añadir tarea")
+		anadir.connect("activate", controller.on_button_añadir_clicked)
+		filemenu.append(anadir)
+
+			
+
+		about = Gtk.MenuItem("Acerca de")
+		about.connect("activate", controller.on_button_acerca_de_clicked)
+		helpmenu.append(about)
 
 		######
 
@@ -114,15 +113,15 @@ class View():
 		keyval = event.keyval
 		keyval_name = Gdk.keyval_name(keyval)
 		ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
-		if ((ctrl and keyval_name == 'd') | (keyval_name == 'Delete')):
+		if (ctrl and keyval_name == 'Delete'):
 			controller.on_button_eliminar_clicked(widget)
 		elif ((ctrl and keyval_name == 'e') | (keyval_name == 'Return')):
 			controller.on_button_editar_clicked(widget)
-		elif ctrl and keyval_name == 'a':
+		elif (ctrl and keyval_name == 'n'):
 			controller.on_button_añadir_clicked(widget)
-		elif keyval_name == 'Escape':
+		elif (ctrl and keyval_name == 'q'):
 			controller.on_button_salir_clicked(widget)
-		elif ctrl and keyval_name == 'F1':
+		elif (keyval_name == 'F1'):
 			controller.on_button_ayuda_clicked(widget)
 		else:
 			return False
@@ -146,6 +145,15 @@ class View():
 	def dialog_exception_selection(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
 				(Gtk.STOCK_OK, Gtk.ResponseType.OK), "Para realizar la acción, seleccione una tarea")
+		dialog.run()
+		dialog.destroy()
+
+	def alert_edit_add(self, widget, title):
+		if title == "Añadir tarea":
+			tmp = "añadido"
+		else: tmp = "actualizado"
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, 
+				(Gtk.STOCK_OK, Gtk.ResponseType.OK), "La tarea se a "+ tmp + " correctamente")
 		dialog.run()
 		dialog.destroy()
 
@@ -209,6 +217,7 @@ class View():
 	    if response == Gtk.ResponseType.OK:
 	        try:
 	            data = [tareaEntry.get_text(), datetime.strptime(fechaEntry.get_text(), "%x"), hechoCheckButton.get_active()]
+	            self.alert_edit_add(parent.get_toplevel(), title)
 	        except ValueError:
 	            self.dialog_exception_date(parent.get_toplevel())
 	    dialog.destroy()
@@ -228,7 +237,14 @@ class View():
 	
 	def showHelp(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_OK, Gtk.ResponseType.OK), "¿Necesitas Ayuda?")
-		dialog.format_secondary_text("Añadir:  Ctrl+A\n"+"Delete:  Ctrl+D or Supr\n"+"Editar:   Ctrl+E or Enter\n"+"Salir:       Esc\n")
+		dialog.format_secondary_text("Añadir:  Ctrl+N\n"+"Delete:  Ctrl+Supr\n"+"Editar:   Ctrl+E or Enter\n"+"Salir:       Ctrl+Q\n")
+		respuesta = dialog.run()
+		if respuesta == Gtk.ResponseType.OK:
+			dialog.destroy()
+
+	def showAbout(self, widget):
+		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.INFO, (Gtk.STOCK_OK, Gtk.ResponseType.OK), "Acerca de IPM")
+		dialog.format_secondary_text("Creadores:  Santiago Álvarez Fernandez y Carlos Franco Romero\n"+"Copyright © 2017 - IPM group\n")
 		respuesta = dialog.run()
 		if respuesta == Gtk.ResponseType.OK:
 			dialog.destroy()
