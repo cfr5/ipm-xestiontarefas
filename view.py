@@ -50,6 +50,11 @@ class View():
 		box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
 		box.pack_start(box2, True, True, 0)
 
+		box3 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+		box.pack_end(box3, True, True, 0)
+		self.spinner = Gtk.Spinner()
+		box3.pack_end(self.spinner, True, True, 0)
+
 		#Boton ayuda
 		button = Gtk.Button(label="Ayuda")
 		button.connect('clicked', controller.on_button_ayuda_clicked)
@@ -272,5 +277,9 @@ class View():
 	def get_store(self):
 		return self.store
 
-
+	def start_spinner(self):
+		self.spinner.start()
+	
+	def stop_spinner(self):
+		self.spinner.stop()
 
