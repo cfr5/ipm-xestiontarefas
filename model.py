@@ -47,5 +47,9 @@ class Model():
 		lista2 = lista
 		random = randint(2,12)
 		time.sleep(random)
+		if random < 9:
+			return True
+		else:
+			return False
 
 

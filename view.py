@@ -12,7 +12,18 @@ class View():
 		box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
 		self._win.add(box)
 
-		menu = Gtk.MenuBar()		
+		menu = Gtk.MenuBar()	
+
+		#Spinner, label sync y boton forzar sync
+		box3 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+		box.pack_end(box3, True, True, 0)
+		self.label = Gtk.Label("Sincronizado")
+		self.spinner = Gtk.Spinner()
+		button = Gtk.Button(label="Forzar sinc")
+		button.connect('clicked', controller.on_button_forzar_clicked)
+		box3.pack_end(button, True, True, 0)
+		box3.pack_end(self.label, True, True, 0)
+		box3.pack_end(self.spinner, True, True, 0)	
 
 		self.store = Gtk.ListStore(str, GObject.TYPE_PYOBJECT, bool)
 
@@ -50,10 +61,6 @@ class View():
 		box2 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
 		box.pack_start(box2, True, True, 0)
 
-		box3 = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
-		box.pack_end(box3, True, True, 0)
-		self.spinner = Gtk.Spinner()
-		box3.pack_end(self.spinner, True, True, 0)
 
 		#Boton ayuda
 		button = Gtk.Button(label="Ayuda")
@@ -92,7 +99,7 @@ class View():
 		filemenu.append(anadir)
 
 			
-
+		#Menu about
 		about = Gtk.MenuItem("Acerca de")
 		about.connect("activate", controller.on_button_acerca_de_clicked)
 		helpmenu.append(about)
@@ -279,7 +286,13 @@ class View():
 
 	def start_spinner(self):
 		self.spinner.start()
+		self.label.set_label("Sincronizando...")
 	
 	def stop_spinner(self):
 		self.spinner.stop()
+		self.label.set_label("Sincronizado")
+	
+	def error_sync(self):
+		self.spinner.stop()
+		self.label.set_label("¡Error al sincronizar!")
 

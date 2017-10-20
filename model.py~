@@ -1,5 +1,6 @@
 from datetime import datetime, date
 from random import randint
+import time
 
 class Model():
 
@@ -44,8 +45,8 @@ class Model():
 
 	def server_sync(self, lista):
 		lista2 = lista
-		random = randint(0,10)
+		random = randint(2,12)
 		time.sleep(random)
-		return True
+		return False
 
 
