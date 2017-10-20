@@ -156,7 +156,8 @@ class View():
 
 	def fecha_cell_data_func(self, column, renderer, model, treeiter, data):
 		fecha = model[treeiter][1]
-		renderer.set_property('text', fecha.strftime("%x"))
+		formatoFecha = locale.nl_langinfo(locale.D_FMT)
+		renderer.set_property('text', fecha.strftime(formatoFecha))
 
 	def dialog_exception_date(self, widget):
 		dialog = Gtk.MessageDialog(widget.get_toplevel(), 0, Gtk.MessageType.ERROR, 
