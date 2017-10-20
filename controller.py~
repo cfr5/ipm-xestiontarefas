@@ -19,11 +19,10 @@ class Controller():
         self.view.showSalir(widget)
 
 
-    def on_button_añadir_clicked(self, widget):
+    def on_button_anadir_clicked(self, widget):
         data = self.view.añadir_tarea_view(widget)
         self.model.insertar_lista(data)
         threading.Thread(target=self.call_server_sync, args=[self.model.get_list()], daemon=True).start()
-
 
 
     def on_button_editar_clicked(self, widget):
@@ -31,7 +30,6 @@ class Controller():
         if dataold != None and datanew != None:
             self.model.editar_valor_lista(dataold, datanew)
             threading.Thread(target=self.call_server_sync, args=[self.model.get_list()], daemon=True).start()
-
 
     def on_button_eliminar_clicked(self, widget):
         data = self.view.eliminar_tarea_view(widget)
@@ -44,6 +42,9 @@ class Controller():
     
     def on_button_acerca_de_clicked(self, widget):
         self.view.showAbout(widget) 
+
+    def on_button_forzar_clicked(self, widget):
+        threading.Thread(target=self.call_server_sync, args=[self.model.get_list()], daemon=True).start() 
 
     def call_server_sync(self, lista):
         self.view.start_spinner()

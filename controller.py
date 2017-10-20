@@ -19,8 +19,8 @@ class Controller():
         self.view.showSalir(widget)
 
 
-    def on_button_añadir_clicked(self, widget):
-        data = self.view.añadir_tarea_view(widget)
+    def on_button_anadir_clicked(self, widget):
+        data = self.view.anadir_tarea_view(widget)
         self.model.insertar_lista(data)
         threading.Thread(target=self.call_server_sync, args=[self.model.get_list()], daemon=True).start()
 
